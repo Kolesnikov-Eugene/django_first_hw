@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http.response import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.urls import reverse_lazy
 from datetime import datetime
+import os
 
 # Create your views here.
 def home_view(request):
@@ -9,9 +10,9 @@ def home_view(request):
     # впишите правильные адреса страниц, используя
     # функцию `reverse`
     pages = {
-        'Главная страница': reverse_lazy(viewname='home'),
+        'Главная страница': '',
         'Показать текущее время': 'current_time/',
-        'Показать содержимое рабочей директории': '3'
+        'Показать содержимое рабочей директории': 'workdir/'
     }
 
     # context и параметры render менять не нужно
@@ -30,7 +31,6 @@ def time_view(request):
 
 
 def workdir_view(request):
-    # по аналогии с `time_view`, напишите код,
-    # который возвращает список файлов в рабочей
-    # директории
-    raise NotImplemented
+    list_of_directories = os.listdir()
+    message = f'Список файлов: {list_of_directories}'
+    return HttpResponse(message)
